@@ -5,19 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Рулетка для Phasmophobia</title>
     
-    <!-- Підключення Tailwind CSS для швидкого та гарного стилю -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Підключення бібліотеки Tone.js для створення звуків у браузері -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.7.77/Tone.js"></script>
     
-    <!-- Підключення унікального шрифту з Google Fonts для атмосфери -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Inter:wght@400;700&display=swap" rel="stylesheet">
     
     <style>
-        /* Додаємо кастомні стилі */
         body {
             font-family: 'Inter', sans-serif;
             background-color: #0c0a14; /* Глибокий темний фон */
@@ -25,7 +21,6 @@
         .font-creepster {
             font-family: 'Creepster', cursive;
         }
-        /* Стиль для "картки" результату */
         .result-card {
             position: relative;
             overflow: hidden;
@@ -44,7 +39,6 @@
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.15);
         }
         
-        /* Анімація появи карток */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
@@ -53,7 +47,6 @@
             animation: fadeIn 0.5s ease-out forwards;
         }
 
-        /* --- СТИЛІ ДЛЯ ЕФЕКТУ "ХОЛОДНОГО ПОДИХУ" --- */
         .cold-breath-effect::before {
             content: '';
             position: absolute;
@@ -74,7 +67,6 @@
             100% { transform: translate(-50%, -50%) scale(1.5); opacity: 0; }
         }
         
-        /* --- НОВА АНІМАЦІЯ ПЛАВНОЇ ЗМІНИ ТЕКСТУ --- */
         .text-flicker {
             animation: flicker 150ms ease-in-out;
         }
@@ -84,14 +76,13 @@
             100% { opacity: 1; transform: translateY(0); }
         }
 
-        /* --- НОВА АНІМАЦІЯ ДИМУ НА ФОНІ --- */
         #smoke-background {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -1; /* Розміщуємо за всім контентом */
+            z-index: -1;
             overflow: hidden;
         }
         .smoke-puff {
@@ -107,13 +98,11 @@
             100% { transform: scale(1.5) translate(50px, -150px); opacity: 0; }
         }
 
-        /* Стиль для списку предметів */
         #items-result ul { list-style-type: none; padding-left: 0; }
         #items-result li { font-size: 1.125rem; line-height: 1.75rem; }
     </style>
 </head>
 <body>
-    <!-- НОВИЙ ЕЛЕМЕНТ: Контейнер для анімації диму -->
     <div id="smoke-background"></div>
 
     <div class="w-full max-w-6xl mx-auto text-center p-4 relative z-10">
@@ -124,7 +113,6 @@
         </header>
 
         <main id="results-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-10">
-            <!-- Картки залишаються ті ж самі -->
             <div id="location-card" class="result-card"><h2 class="text-2xl font-bold text-red-400 mb-3">Локація</h2><p id="location-result" class="text-xl flex-grow flex items-center justify-center">???</p></div>
             <div id="difficulty-card" class="result-card"><h2 class="text-2xl font-bold text-red-400 mb-3">Складність</h2><p id="difficulty-result" class="text-xl flex-grow flex items-center justify-center">???</p></div>
             <div id="tier-card" class="result-card"><h2 class="text-2xl font-bold text-red-400 mb-3">Рівень Предметів</h2><p id="tier-result" class="text-xl flex-grow flex items-center justify-center">???</p></div>
@@ -148,7 +136,6 @@
         const tiers = ["Рівень 1 (Tier 1)", "Рівень 2 (Tier 2)", "Рівень 3 (Tier 3)"];
         const allItems = ["Проєктор D.O.T.S", "Детектор ЕМП", "Ліхтарик", "Книга примарних записів", "Радіоприймач", "Термометр", "УФ-ліхтарик", "Відеокамера", "Розп'яття", "Вогняне світло", "Спорядження на голову", "Запальничка", "Пахощі", "Датчик руху", "Параболічний мікрофон", "Фотокамера", "Сіль", "Заспокійливе", "Звуковий Реєстратор", "Датчик звуку", "Штатив"];
 
-        // --- ЕЛЕМЕНТИ ІНТЕРФЕЙСУ (без змін) ---
         const spinButton = document.getElementById('spin-button');
         const allCards = {
             location: { card: document.getElementById('location-card'), result: document.getElementById('location-result'), data: locations },
@@ -158,16 +145,13 @@
             challenge: { card: document.getElementById('challenge-card'), result: document.getElementById('challenge-result'), data: challenges }
         };
 
-        // --- ОНОВЛЕНІ НАЛАШТУВАННЯ ЗВУКІВ ---
         let audioStarted = false;
         
-        // Звук "появи" результату (залишився без змін)
         const revealSound = new Tone.Synth({
             oscillator: { type: 'fmsquare', modulationType: 'sawtooth', modulationIndex: 0 },
             envelope: { attack: 0., decay: 0, sustain: 0, release: 0 }
         }).toDestination();
         
-        // НОВА РЕЛАКСУЮЧА МЕЛОДІЯ
         const melodySynth = new Tone.AMSynth({
             harmonicity: 1.5,
             envelope: { attack: 0.01, decay: 0.1, sustain: 0.1, release: 0.2 },
@@ -195,10 +179,8 @@
             element.innerHTML = '...';
 
             const spinAnimation = setInterval(() => {
-                // Плавна зміна тексту
                 element.classList.add('text-flicker');
                 
-                // Оновлюємо текст після половини анімації зникнення
                 setTimeout(() => {
                     if (isItemList) {
                         element.innerHTML = `<ul>${getRandomItems(options, 3).map(item => `<li>- ${item}</li>`).join('')}</ul>`;
@@ -225,7 +207,6 @@
                     parentCard.classList.add('cold-breath-effect');
                     setTimeout(() => parentCard.classList.remove('cold-breath-effect'), 1500);
                 } else {
-                    // Прибираємо клас анімації, щоб вона могла запуститись знову
                     setTimeout(() => element.classList.remove('text-flicker'), spinInterval);
                 }
             }, spinInterval);
@@ -241,7 +222,6 @@
             spinButton.textContent = 'Крутиться...';
             spinButton.classList.remove('hover:bg-red-700', 'hover:scale-105');
             
-            // Запускаємо мелодію
 			spinMelody.stop();
 			spinMelody.start(0);
 			Tone.Transport.start(); 
@@ -284,10 +264,9 @@
             }, totalAnimationTime);
         }
 
-        // --- НОВА ФУНКЦІЯ ДЛЯ СТВОРЕННЯ ДИМУ ---
         function createSmoke() {
             const smokeContainer = document.getElementById('smoke-background');
-            const puffCount = 15; // Кількість клубів диму
+            const puffCount = 20; // Кількість клубів диму
             for (let i = 0; i < puffCount; i++) {
                 const puff = document.createElement('div');
                 puff.className = 'smoke-puff';
@@ -308,7 +287,6 @@
             }
         }
 
-        // Запускаємо створення диму після завантаження сторінки
         window.onload = createSmoke;
         spinButton.addEventListener('click', spinRoulette);
     </script>
