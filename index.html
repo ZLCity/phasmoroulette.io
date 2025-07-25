@@ -328,14 +328,46 @@
         spinButton.addEventListener('click', spinRoulette);
     </script>
 
-    <div style="position: fixed; bottom: 10px; right: 10px; z-index: 9999;" class="text-sm text-gray-400 bg-black bg-opacity-70 px-3 py-2 rounded-lg shadow-md">
-	Онлайн зараз:
-	<img
-	    src="https://api.visitorbadge.io/api/visitors?path=phasmoroulette.io&label=Online&labelColor=%23e11d48&countColor=%23ffffff&style=flat-square&showNum=true"
-	    alt="Online Users"
-	    style="display: inline; vertical-align: middle; height: 20px; margin-left: 6px;"
-	/>
+<div style="position: fixed; bottom: 10px; right: 10px; z-index: 9999;" class="text-sm text-gray-100 bg-gray-1000 bg-opacity-70 px-3 py-2 rounded-lg shadow-md">
+    Онлайн зараз:
+    <img
+        src="https://api.visitorbadge.io/api/visitors?path=phasmoroulette.io&label=Online&labelColor=%23e11d48&countColor=%23ffffff&style=flat-square&showNum=true"
+        alt="Online Users"
+        style="display: inline; vertical-align: middle; height: 20px; margin-left: 6px;"
+    />
+
+    <div class="mt-2 text-center">
+        <button onclick="toggleFooter()" id="footerToggleButton" class="mt-2 bg-gray-1000 text-white px-3 py-1 rounded hover:bg-gray-700">
+            Приховати
+        </button>
     </div>
+	
+
+    <div id="footerContainer" class="mt-3" style="display: block;">
+        <footer class="bg-gray-900 text-white py-4 text-center rounded-lg">
+            <p>Автор: <strong>Kamisamych</strong></p>
+            <div class="mt-2 space-x-4">
+                <a href="https://twitch.tv/kamisamych" target="_blank" class="hover:underline text-purple-400">Twitch</a>
+                <a href="https://discord.com/users/livekamisama" target="_blank" class="hover:underline text-blue-400">Discord</a>
+            </div>
+        </footer>
+    </div>
+</div>
+
+    <script>
+        function toggleFooter() {
+            const footer = document.getElementById("footerContainer");	
+            const button = document.getElementById("footerToggleButton");
+
+        if (getComputedStyle(footer).display === "none") {
+            footer.style.display = "block";
+            button.innerText = "Приховати";
+        } else {
+            footer.style.display = "none";
+            button.innerText = "Показати ";
+        }
+    }
+</script>
 
 </body>
 </html>
