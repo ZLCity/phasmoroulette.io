@@ -155,11 +155,6 @@
 
     </div>
     
-    <div class="text-sm text-gray-400 mt-4">
-        Онлайн зараз: 
-        <img src="https://api.visitorbadge.io/api/visitors?path=phasmoroulette.io&label=Online&labelColor=%23e11d48&countColor=%23ffffff&style=flat-square&showNum=true" alt="Online Users"/>
-    </div>
-
     <script>
         // --- БАЗА ДАНИХ ДЛЯ РУЛЕТКИ (Оновлено) ---
         const locations = ["6 Tanglewood Drive", "42 Edgefield Road", "10 Ridgeview Court", "Grafton Farmhouse", "13 Willow Street", "Point Hope", "Brownstone High School", "Bleasdale Farmhouse", "Sunny Meadows", "Sunny Meadows Restricted", "Prison", "Maple Lodge Campsite", "Camp Woodwind"];
@@ -332,5 +327,15 @@
         window.onload = createSmoke;
         spinButton.addEventListener('click', spinRoulette);
     </script>
+
+    <div style="position: fixed; bottom: 10px; right: 10px; z-index: 9999;" class="text-sm text-gray-400 bg-black bg-opacity-70 px-3 py-2 rounded-lg shadow-md">
+	Онлайн зараз:
+	<img
+	    src="https://api.visitorbadge.io/api/visitors?path=phasmoroulette.io&label=Online&labelColor=%23e11d48&countColor=%23ffffff&style=flat-square&showNum=true"
+	    alt="Online Users"
+	    style="display: inline; vertical-align: middle; height: 20px; margin-left: 6px;"
+	/>
+    </div>
+
 </body>
 </html>
